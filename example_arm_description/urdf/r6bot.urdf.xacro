@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<robot name="r6bot" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- helper macro -->
+  <xacro:include filename="$(find example_arm_description)/urdf/r6bot_urdf_macro.xacro"/>
+
+  <xacro:r6bot_description
+  />
+
+  <link name="world"/>
+  <joint name="base_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+
+</robot>
