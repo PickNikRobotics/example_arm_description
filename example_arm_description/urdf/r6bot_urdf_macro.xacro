@@ -1,19 +1,37 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="r6bot_description" params="prefix:=''">
+  <xacro:macro name="r6bot_description" params="prefix:='' mirror:=false">
+
+  <!--
+    prefix: prepended to every link and joint name, so one robot description can contain more than one arm.
+    mirror: reflect the arm across the y-z plane of its base frame, giving the mirror image of the default arm, for a
+    pair of arms whose shoulders face opposite ways. The same joint values put a mirrored arm in the mirror-image pose,
+    so every joint axis is reversed: a physical arm described this way needs a driver that reports its joints in that
+    mirrored convention.
+  -->
+  <xacro:property name="mirror_sign" value="1"/>
+  <xacro:property name="mirror_mesh_dir" value=""/>
+  <xacro:if value="${mirror}">
+    <xacro:property name="mirror_sign" value="-1"/>
+    <!--
+      Collision meshes come pre-mirrored, from scripts/generate_mirrored_collision_meshes.py: a negative mesh scale
+      would turn them inside out, so collision padding would shrink them instead of growing them.
+    -->
+    <xacro:property name="mirror_mesh_dir" value="mirrored/"/>
+  </xacro:if>
 
   <link name="${prefix}base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/visual/link_0.dae"/>
+        <mesh filename="package://example_arm_description/meshes/visual/link_0.dae" scale="${mirror_sign} 1 1"/>
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/collision/link_0.stl"/>
+        <mesh filename="package://example_arm_description/meshes/collision/${mirror_mesh_dir}link_0.stl"/>
       </geometry>
     </collision>
   </link>
@@ -22,13 +40,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/visual/link_1.dae"/>
+        <mesh filename="package://example_arm_description/meshes/visual/link_1.dae" scale="${mirror_sign} 1 1"/>
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/collision/link_1.stl"/>
+        <mesh filename="package://example_arm_description/meshes/collision/${mirror_mesh_dir}link_1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -37,13 +55,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/visual/link_2.dae"/>
+        <mesh filename="package://example_arm_description/meshes/visual/link_2.dae" scale="${mirror_sign} 1 1"/>
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/collision/link_2.stl"/>
+        <mesh filename="package://example_arm_description/meshes/collision/${mirror_mesh_dir}link_2.stl"/>
       </geometry>
     </collision>
   </link>
@@ -52,13 +70,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/visual/link_3.dae"/>
+        <mesh filename="package://example_arm_description/meshes/visual/link_3.dae" scale="${mirror_sign} 1 1"/>
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/collision/link_3.stl"/>
+        <mesh filename="package://example_arm_description/meshes/collision/${mirror_mesh_dir}link_3.stl"/>
       </geometry>
     </collision>
   </link>
@@ -67,13 +85,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/visual/link_4.dae"/>
+        <mesh filename="package://example_arm_description/meshes/visual/link_4.dae" scale="${mirror_sign} 1 1"/>
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/collision/link_4.stl"/>
+        <mesh filename="package://example_arm_description/meshes/collision/${mirror_mesh_dir}link_4.stl"/>
       </geometry>
     </collision>
   </link>
@@ -82,13 +100,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/visual/link_5.dae"/>
+        <mesh filename="package://example_arm_description/meshes/visual/link_5.dae" scale="${mirror_sign} 1 1"/>
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/collision/link_5.stl"/>
+        <mesh filename="package://example_arm_description/meshes/collision/${mirror_mesh_dir}link_5.stl"/>
       </geometry>
     </collision>
   </link>
@@ -97,13 +115,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/visual/link_6.dae"/>
+        <mesh filename="package://example_arm_description/meshes/visual/link_6.dae" scale="${mirror_sign} 1 1"/>
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://example_arm_description/meshes/collision/link_6.stl"/>
+        <mesh filename="package://example_arm_description/meshes/collision/${mirror_mesh_dir}link_6.stl"/>
       </geometry>
     </collision>
   </link>
@@ -115,47 +133,47 @@
     <parent link="${prefix}base_link"/>
     <child link="${prefix}link_1"/>
     <origin xyz="0 0 0.061584" rpy="0 0 0"/>
-    <axis xyz="0 0 1"/>
+    <axis xyz="0 0 ${mirror_sign}"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="${prefix}joint_2" type="revolute">
     <parent link="${prefix}link_1"/>
     <child link="${prefix}link_2"/>
-    <origin xyz="-0.101717 0 0.182284" rpy="${-pi/2} -${pi/3} ${pi/2}"/>
-    <axis xyz="0 0 1"/>
+    <origin xyz="${mirror_sign * -0.101717} 0 0.182284" rpy="${-pi/2} ${mirror_sign * -(pi/3)} ${mirror_sign * (pi/2)}"/>
+    <axis xyz="0 0 ${mirror_sign}"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="${prefix}joint_3" type="revolute">
     <parent link="${prefix}link_2"/>
     <child link="${prefix}link_3"/>
-    <origin xyz="0.685682 0 0.041861" rpy="0 ${pi} ${pi+pi/2}"/>
-    <axis xyz="0 0 1"/>
+    <origin xyz="${mirror_sign * 0.685682} 0 0.041861" rpy="0 ${mirror_sign * (pi)} ${mirror_sign * (pi+pi/2)}"/>
+    <axis xyz="0 0 ${mirror_sign}"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="${prefix}joint_4" type="revolute">
     <parent link="${prefix}link_3"/>
     <child link="${prefix}link_4"/>
-    <origin xyz="0.518777 0 0.067458" rpy="0 ${pi} ${pi+pi/6}"/>
-    <axis xyz="0 0 1"/>
+    <origin xyz="${mirror_sign * 0.518777} 0 0.067458" rpy="0 ${mirror_sign * (pi)} ${mirror_sign * (pi+pi/6)}"/>
+    <axis xyz="0 0 ${mirror_sign}"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="${prefix}joint_5" type="revolute">
     <parent link="${prefix}link_4"/>
     <child link="${prefix}link_5"/>
-    <origin xyz="0.112654 0 0.110903" rpy="${pi/2} ${pi} ${pi/2}"/>
-    <axis xyz="0 0 1"/>
+    <origin xyz="${mirror_sign * 0.112654} 0 0.110903" rpy="${pi/2} ${mirror_sign * (pi)} ${mirror_sign * (pi/2)}"/>
+    <axis xyz="0 0 ${mirror_sign}"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="${prefix}joint_6" type="revolute">
     <parent link="${prefix}link_5"/>
     <child link="${prefix}link_6"/>
-    <origin xyz="-0.085976 0 0.133436" rpy="0 ${-pi/2} 0"/>
-    <axis xyz="0 0 1"/>
+    <origin xyz="${mirror_sign * -0.085976} 0 0.133436" rpy="0 ${mirror_sign * (-pi/2)} 0"/>
+    <axis xyz="0 0 ${mirror_sign}"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
