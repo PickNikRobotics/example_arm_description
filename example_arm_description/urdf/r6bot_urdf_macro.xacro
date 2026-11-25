@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="r6bot_description">
+  <xacro:macro name="r6bot_description" params="prefix:=''">
 
-  <link name="base_link">
+  <link name="${prefix}base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -18,7 +18,7 @@
     </collision>
   </link>
 
-  <link name="link_1">
+  <link name="${prefix}link_1">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -33,7 +33,7 @@
     </collision>
   </link>
 
-  <link name="link_2">
+  <link name="${prefix}link_2">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -48,7 +48,7 @@
     </collision>
   </link>
 
-  <link name="link_3">
+  <link name="${prefix}link_3">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -63,7 +63,7 @@
     </collision>
   </link>
 
-  <link name="link_4">
+  <link name="${prefix}link_4">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -78,7 +78,7 @@
     </collision>
   </link>
 
-  <link name="link_5">
+  <link name="${prefix}link_5">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -93,7 +93,7 @@
     </collision>
   </link>
 
-  <link name="link_6">
+  <link name="${prefix}link_6">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -108,66 +108,66 @@
     </collision>
   </link>
 
-  <link name="ft_frame"/>
-  <link name="tool0"/>
+  <link name="${prefix}ft_frame"/>
+  <link name="${prefix}tool0"/>
 
-  <joint name="joint_1" type="revolute">
-    <parent link="base_link"/>
-    <child link="link_1"/>
+  <joint name="${prefix}joint_1" type="revolute">
+    <parent link="${prefix}base_link"/>
+    <child link="${prefix}link_1"/>
     <origin xyz="0 0 0.061584" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
-  <joint name="joint_2" type="revolute">
-    <parent link="link_1"/>
-    <child link="link_2"/>
+  <joint name="${prefix}joint_2" type="revolute">
+    <parent link="${prefix}link_1"/>
+    <child link="${prefix}link_2"/>
     <origin xyz="-0.101717 0 0.182284" rpy="${-pi/2} -${pi/3} ${pi/2}"/>
     <axis xyz="0 0 1"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
-  <joint name="joint_3" type="revolute">
-    <parent link="link_2"/>
-    <child link="link_3"/>
+  <joint name="${prefix}joint_3" type="revolute">
+    <parent link="${prefix}link_2"/>
+    <child link="${prefix}link_3"/>
     <origin xyz="0.685682 0 0.041861" rpy="0 ${pi} ${pi+pi/2}"/>
     <axis xyz="0 0 1"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
-  <joint name="joint_4" type="revolute">
-    <parent link="link_3"/>
-    <child link="link_4"/>
+  <joint name="${prefix}joint_4" type="revolute">
+    <parent link="${prefix}link_3"/>
+    <child link="${prefix}link_4"/>
     <origin xyz="0.518777 0 0.067458" rpy="0 ${pi} ${pi+pi/6}"/>
     <axis xyz="0 0 1"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
-  <joint name="joint_5" type="revolute">
-    <parent link="link_4"/>
-    <child link="link_5"/>
+  <joint name="${prefix}joint_5" type="revolute">
+    <parent link="${prefix}link_4"/>
+    <child link="${prefix}link_5"/>
     <origin xyz="0.112654 0 0.110903" rpy="${pi/2} ${pi} ${pi/2}"/>
     <axis xyz="0 0 1"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
-  <joint name="joint_6" type="revolute">
-    <parent link="link_5"/>
-    <child link="link_6"/>
+  <joint name="${prefix}joint_6" type="revolute">
+    <parent link="${prefix}link_5"/>
+    <child link="${prefix}link_6"/>
     <origin xyz="-0.085976 0 0.133436" rpy="0 ${-pi/2} 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="1000" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
-  <joint name="joint-ft_frame" type="fixed">
-    <parent link="link_6"/>
-    <child link="ft_frame"/>
+  <joint name="${prefix}joint-ft_frame" type="fixed">
+    <parent link="${prefix}link_6"/>
+    <child link="${prefix}ft_frame"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 
-  <joint name="joint-tool" type="fixed">
-    <parent link="ft_frame"/>
-    <child link="tool0"/>
+  <joint name="${prefix}joint-tool" type="fixed">
+    <parent link="${prefix}ft_frame"/>
+    <child link="${prefix}tool0"/>
     <origin xyz="0 0 0.185" rpy="0 0 0"/>
   </joint>
 
